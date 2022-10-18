@@ -25,11 +25,17 @@ app.get("/main", function (req, res) {
 });
 
 
-
 app.post("/email_post", function (req, res) {
     console.log("req.body : ", req.body.email);
     //res.send(`<h1>welcome! ${req.body.email}</h1>`);
     res.render('email.ejs', { 'email': req.body.email })
+});
+
+app.post("/ajax_send_email", function (req, res) {
+    console.log("ajax_send_email - req.body : ", req.body.email);
+    //check validation about input value => select db
+    var responseData = { 'result': 'ok', 'email': req.body.email };
+    res.status(200).json(responseData);
 });
 
 
