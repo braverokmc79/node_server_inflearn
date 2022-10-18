@@ -10,4 +10,18 @@ router.get("/", function (req, res) {
 });
 
 
+router.post("/", function (req, res) {
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    db.query("INSERT INTO users(name, email, password) VALUES (?, ? ,? )", [name, email, password], function (err, rows) {
+        if (err) { throw err; }
+        console.log("ok db insert");
+        res.json("ok");
+    });
+
+});
+
+
 module.exports = router;

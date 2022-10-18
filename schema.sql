@@ -8,8 +8,8 @@ grant all privileges on node_inflearn.* to `node_inflearn`@`localhost` ;
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) unique NOT NULL,
+  `name` varchar(30) ,
   `email` varchar(30) unique NOT NULL,
-  `password` varchar(100) DEFAULT NULL,
+  `password` varchar(100),
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
