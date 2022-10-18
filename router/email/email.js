@@ -1,13 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'node_inflearn',
-    password: '1111',
-    database: 'node_inflearn'
-});
-db.connect();
+const db = require("../../lib/db");
 
 
 router.post("/form", function (req, res) {
