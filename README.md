@@ -1,7 +1,9 @@
 ## Node.js 웹개발로 알아보는 백엔드 자바스크립트의 이해
 
-이미지
-<img src="https://cdn.inflearn.com/wp-content/uploads/nodejs3.jpg" width="350">
+### 인프런 강의
+
+<a hrf="https://www.inflearn.com/course/node-js-%EC%9B%B9%EA%B0%9C%EB%B0%9C#" target="_blank">
+<img src="https://cdn.inflearn.com/wp-content/uploads/nodejs3.jpg" width="350"></a>
 
 Node.js, Express를 기반으로 한 웹애플리케이션 구축.
 Template Engine
