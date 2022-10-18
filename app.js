@@ -9,9 +9,10 @@ const db = mysql.createConnection({
 });
 db.connect();
 //console.log("db 접속 :", db);
-
-
+const mainRouter = require("./router/main");
 const app = express();
+
+
 
 app.listen(3000, function () {
     console.log("start! express server on port 3000");
@@ -25,15 +26,16 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 
+
+app.use("/main", mainRouter);
+
+
 app.get("/", function (req, res) {
     console.log("test");
     //res.send("<h1>h1 friend</h1>");
     res.sendFile(__dirname + "/public/main.html");
 });
 
-app.get("/main", function (req, res) {
-    res.sendFile(__dirname + "/public/main.html");
-});
 
 
 app.post("/email_post", function (req, res) {
