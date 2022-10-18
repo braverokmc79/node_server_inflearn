@@ -11,6 +11,8 @@ app.use(express.static("public"));
 //app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+
 
 app.get("/", function (req, res) {
     console.log("test");
@@ -26,7 +28,8 @@ app.get("/main", function (req, res) {
 
 app.post("/email_post", function (req, res) {
     console.log("req.body : ", req.body.email);
-    res.send(`<h1>welcome! ${req.body.email}</h1>`);
+    //res.send(`<h1>welcome! ${req.body.email}</h1>`);
+    res.render('email.ejs', { 'email': req.body.email })
 });
 
 
