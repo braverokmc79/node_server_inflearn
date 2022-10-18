@@ -46,8 +46,12 @@
                 body:JSON.stringify({'email':data})
             }) .then(res=>res.json())  
             .then(res=>{
-                if(res.result!=="ok")return;
-                document.querySelector(".result").innerHTML=res.email;
+                console.log(" res :  ", res);
+
+                const resultDiv=document.querySelector(".result");
+
+                if(res.result!=="ok")return resultDiv.innerHTML="your email is not found";
+                else resultDiv.innerHTML=res.name;
             }).catch(err=>console.error("에러:",err));
         }
     </script>
