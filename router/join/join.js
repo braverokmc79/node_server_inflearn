@@ -16,7 +16,7 @@ router.get("/", function (req, res) {
 
 passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
-        console.log("로그인 처리시 최초 한번만 실행 passport.serializeUser  :", user);
+        console.log("회원 가입 처리시 최초 한번만 실행 passport.serializeUser  :", user);
         cb(null, { id: user.id, email: user.email, name: user.name });
     });
 });
@@ -35,7 +35,7 @@ passport.use(new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function verify(req, email, password, done) {
-    console.log("파라미터 ", req.body);
+    console.log("회원 가입 파라미터 ", req.body);
 
     db.query("SELECT * FROM users WHERE email=?", [email], function (err, rows) {
         if (err) return done(null, false, { message: err.toString() });

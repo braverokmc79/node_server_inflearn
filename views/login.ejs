@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <link rel="stylesheet" href="/css/ui.css">
     <style>
         .messages{
             color: #963b3b;;
@@ -15,20 +16,24 @@
 <body>
     <h1>로그인</h1>
     <h2 class="result"></h2>
-    
-    <section class="messages"><%= message %></section>
-    <form action="/join" method="post">
-        email :  <input type="text" name="email"><br/>    
-        password :  <input type="password" name="password"><br/>      
-    </form>  
-    
-    <button class="ajaxsend">로그인</button>
+          
+        <div class="formWrap">
+            <form action="" method="post">
+                <div class="inputWrap">
+                    <div class="email">
+                		<span> Email </span> <input type="text" name="email"><br/>
+                    </div>
+                    <div class="password">
+                        <span> Password </span> <input type="password" name="password"><br/>
+                    </div>
+                </div>
+                <input class="sendbtn" type="button" value="로그인">
+    	   </form>
+        </div>
 
     
     <script>
-     
-
-     document.querySelector('.ajaxsend').addEventListener('click',function(){
+     document.querySelector('.sendbtn').addEventListener('click',function(){
             var email =document.getElementsByName("email")[0].value;
             var password =document.getElementsByName("password")[0].value;
             sendAjax('/login',{'email':email, 'password':password});
@@ -42,14 +47,12 @@
             }) .then(res=>res.json())  
             .then(res=>{
                 console.log(" res :  ", res);
-
                 const resultDiv=document.querySelector(".result");
                 if(!res.name)return resultDiv.innerHTML="아이디 또는 비밀번호가 일치하지 않습니다. ";
                 else resultDiv.innerHTML=`${res.name}님! 환영합니다.`;
 
             }).catch(err=>   console.error("에러", err));
         }
-
     </script>
     
 </body>
