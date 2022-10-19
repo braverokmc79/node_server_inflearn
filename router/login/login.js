@@ -9,8 +9,7 @@ router.get("/", function (req, res) {
     let msg = "";
     const errMsg = req.flash("error");
     if (errMsg) msg = errMsg;
-
-    res.render("join.ejs", { 'message': msg });
+    res.render("login.ejs", { 'message': msg });
 });
 
 
@@ -21,7 +20,7 @@ passport.serializeUser(function (user, cb) {
     });
 });
 
-// 회원가입이 성공되면 passport.deserializeUser  매번 실행 처리된다
+// 로그인 성공되면 passport.deserializeUser  매번 실행 처리된다
 passport.deserializeUser(function (user, cb) {
     process.nextTick(function () {
         console.log(" passport.deserializeUser  :", user);

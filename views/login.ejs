@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        .messages{
+            color: #963b3b;;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>로그인</h1>
+    <section class="messages"><%= message %></section>
+    <form action="/join" method="post">
+        email :  <input type="text" name="email"><br/>    
+        password :  <input type="password" name="password"><br/>      
+    </form>  
+    
+    <button class="ajaxsend">로그인</button>
+
+    <script>
+     document.querySelector('.ajaxsend').addEventListener('click',function(){
+            var email =document.getElementsByName("email")[0].value;
+            var password =document.getElementsByName("password")[0].value;
+            sendAjax('/login/ajax',{'email':email, 'password':password});
+        });
+       
+        function sendAjax(url, data){
+            fetch(url, {
+                headers:{'Content-Type' :"application/json"},
+                method:"POST",
+                body:JSON.stringify(data)
+            }) .then(res=>res.json())  
+            .then(res=>{
+                console.log(" res :  ", res);
+
+                const resultDiv=document.querySelector(".result");
+
+                if(res.result!=="ok")return resultDiv.innerHTML="your email is not found";
+                else resultDiv.innerHTML=res.name;
+            }).catch(err=>console.error("에러:",err));
+        }
+
+    </script>
+    
+</body>
+</html>
