@@ -34,34 +34,44 @@ passport.use(new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function verify(req, email, password, done) {
-    console.log("파라미터 ", req.body);
 
-    db.query("SELECT * FROM users WHERE email=?", [email], function (err, rows) {
+    console.log("로그인 처리 파라미터 ", req.body);
+
+    db.query("SELECT * FROM users WHERE email=? and password=?", [email, password], function (err, rows) {
         if (err) return done(null, false, { message: err.toString() });
 
         if (rows.length) {
-            console.log("existed email");
-            return done(null, false, { message: "your email is already used" });
+            console.log("로그인 성공 처리 : ", rows[0]);
+            return done(null, { "id": rows[0].id, "email": rows[0].email, "name": rows[0].name });
 
         } else {
-            db.query("INSERT INTO users(name, email, password) VALUES (?, ? ,? )", [req.body.name, email, password], function (err, rows) {
-                if (err) throw err;
-                return done(null, { "id": rows.insertId, 'email': email, "name": req.body.name });
-            });
+            return done(null, false, { "message": "your login info is not found >.<" })
         }
-
-
     });
 }
+
 ));
 
-// 회원가입 처리 - 성공 및 실패 페이지 설정 및 flash 사용여부 설정하기
-router.post('/', passport.authenticate('local', {
-    successRedirect: '/main',
-    failureRedirect: '/join',
-    failureFlash: true,
-    successFlash: true
-}));
+
+
+// ajax 로그인 처리
+router.post('/', function (req, res, next) {
+
+    passport.authenticate('local', function (err, user, info) {
+        if (err) res.status(500).json(err);
+        if (!user) return res.status(401).json(info.message);
+
+        console.log("1.ajax 로그인 처리 :", user, info);
+
+        req.logIn(user, function (err) {
+            if (err) return next(err);
+            return res.json(user);
+        })
+
+    })(req, res.next);
+
+
+});
 
 
 

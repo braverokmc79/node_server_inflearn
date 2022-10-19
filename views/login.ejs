@@ -14,6 +14,8 @@
 </head>
 <body>
     <h1>로그인</h1>
+    <h2 class="result"></h2>
+    
     <section class="messages"><%= message %></section>
     <form action="/join" method="post">
         email :  <input type="text" name="email"><br/>    
@@ -22,11 +24,14 @@
     
     <button class="ajaxsend">로그인</button>
 
+    
     <script>
+     
+
      document.querySelector('.ajaxsend').addEventListener('click',function(){
             var email =document.getElementsByName("email")[0].value;
             var password =document.getElementsByName("password")[0].value;
-            sendAjax('/login/ajax',{'email':email, 'password':password});
+            sendAjax('/login',{'email':email, 'password':password});
         });
        
         function sendAjax(url, data){
@@ -39,10 +44,10 @@
                 console.log(" res :  ", res);
 
                 const resultDiv=document.querySelector(".result");
+                if(!res.name)return resultDiv.innerHTML="아이디 또는 비밀번호가 일치하지 않습니다. ";
+                else resultDiv.innerHTML=`${res.name}님! 환영합니다.`;
 
-                if(res.result!=="ok")return resultDiv.innerHTML="your email is not found";
-                else resultDiv.innerHTML=res.name;
-            }).catch(err=>console.error("에러:",err));
+            }).catch(err=>   console.error("에러", err));
         }
 
     </script>
