@@ -13,6 +13,23 @@ router.get("/", function (req, res) {
     res.render("join.ejs", { 'message': msg });
 });
 
+
+passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+        console.log("로그인 처리시 최초 한번만 실행 passport.serializeUser  :", user);
+        cb(null, { id: user.id, email: user.email, name: user.name });
+    });
+});
+
+// 로그인 성공되면 passport.deserializeUser  매번 실행 처리된다
+passport.deserializeUser(function (user, cb) {
+    process.nextTick(function () {
+        console.log(" passport.deserializeUser  :", user);
+        return cb(null, user);
+    });
+});
+
+
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -30,7 +47,7 @@ passport.use(new LocalStrategy({
         } else {
             db.query("INSERT INTO users(name, email, password) VALUES (?, ? ,? )", [req.body.name, email, password], function (err, rows) {
                 if (err) throw err;
-                return done(null, { 'email': email, "name": req.body.name, "id": rows.insertId });
+                return done(null, { "id": rows.insertId, 'email': email, "name": req.body.name });
             });
         }
 
@@ -39,7 +56,7 @@ passport.use(new LocalStrategy({
 }
 ));
 
-// 로그인 처리 - 성공 및 실패 페이지 설정 및 flash 사용여부 설정하기
+// 회원가입 처리 - 성공 및 실패 페이지 설정 및 flash 사용여부 설정하기
 router.post('/', passport.authenticate('local', {
     successRedirect: '/main',
     failureRedirect: '/join',
