@@ -17,7 +17,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `movie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(30) ,
+  `title` varchar(30) unique ,
   `type` varchar(10),
   `grade` varchar(5),
   `actor` varchar(30),

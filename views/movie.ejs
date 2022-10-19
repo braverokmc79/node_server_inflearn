@@ -81,7 +81,7 @@
                     url = "/movie";
                     method = "GET";
                     fn = function(result) {
-                        if(result) {
+                        if(!result.err) {
                             let titles = result.reduce(function(pre,next){
                                 pre += "<li>" + next.title + "</li>"
                                 return pre;
@@ -101,8 +101,9 @@
                         return pre;
                     }, {});
                     fn = function (result) {
-                        if(result.result === 1) showResult.innerHTML = "새로운 영화 데이터가 잘 추가됐습니다.";
-                        else showResult.innerHTML = "list not found";
+
+                        if(!result.err) showResult.innerHTML = "새로운 영화 데이터가 잘 추가됐습니다.";
+                        else showResult.innerHTML =result.err;
                     }
                     break;
                 case "get_id":
@@ -140,15 +141,14 @@
 
           const result=await fetch(url, {
                 headers:{"Content-Type" :"application/json"},
-                method:"GET",
+                method:method,
                 body:JSON.stringify(data)
             }).then(data=>data.json())
             .then(res=>res)
             .catch(err=>console.error("에러 :",err.toString()));
             
             console.log("결과값  : ", result);
-            fn(result);
-         
+            fn(result);         
         }
     </script>
 
