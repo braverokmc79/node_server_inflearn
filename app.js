@@ -24,8 +24,6 @@ app.use(flash());
 app.use(router);
 
 
-
-
 app.listen(3000, function () {
     console.log("start! express server on port 3000");
 });
