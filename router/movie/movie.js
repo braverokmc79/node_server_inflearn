@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const db = require("../../lib/db");
 
+router.get("/list", function (req, res) {
+    res.render("movie.ejs");
+});
+
 //1. /movie, GET
 router.get("/", function (req, res) {
 
@@ -27,9 +31,21 @@ router.post("/", function (req, res) {
 })
 
 
-router.get("/list", function (req, res) {
-    res.render("movie.ejs");
+
+//3. /movie/:title", GET"
+router.get("/:title", function (req, res) {
+    console.log(" req body : ", req.params.title);
+
+    db.query("select * from movie where   title =? ", [req.params.title], function (err, rows) {
+        if (err) return res.status(400).json({ err: err.toString() })
+        console.log("rows : ", rows[0]);
+        res.status(200).json(rows[0]);
+    });
+
 });
+
+
+
 
 
 module.exports = router;

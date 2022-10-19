@@ -110,8 +110,8 @@
                     url = "/movie/"+li.getElementsByTagName("input")[0].value;
                     method = "GET";
                     fn = function(result) {
-                        if(result.result === 1) {
-                            showResult.innerHTML = result.data[0].actor;
+                        if(!result.err) {
+                            showResult.innerHTML = result.actor;
                         }else {
                             showResult.innerHTML = "해당하는 영화가 없네요..";
                         }
