@@ -6,6 +6,7 @@ const emailRouter = require("./email/email");
 let joinRouter = null;
 let loginRouter = null;
 const logoutRouter = require("./logout/logout");
+const movieRouter = require("./movie/movie");
 const parseurl = require('parseurl');
 
 
@@ -18,7 +19,7 @@ router.get("/", function (req, res) {
 
 router.use(function (req, res, next) {
     const pathname = parseurl(req).pathname;
-    console.log("현재 경록 :", pathname);
+    console.log("현재 경로 :", pathname);
 
     if (pathname && pathname === "/login") {
         loginRouter = require("./login/login");
@@ -37,6 +38,7 @@ router.use(function (req, res, next) {
 router.use("/main", mainRouter);
 router.use("/email", emailRouter);
 router.use("/logout", logoutRouter);
+router.use("/movie", movieRouter);
 
 
 module.exports = router;
